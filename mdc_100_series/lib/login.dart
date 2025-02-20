@@ -1,17 +1,3 @@
-// Copyright 2018-present the Flutter authors. All Rights Reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,7 +8,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // TODO: Add text editing controllers (101)
+  // Add text editing controllers
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,16 +24,88 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset('assets/diamond.png'),
                 const SizedBox(height: 16.0),
-                const Text('SHRINE'),
+                Text(
+                  'SHRINE',
+                  style: Theme.of(context).textTheme.headlineSmall, // Updated to use theme
+                ),
               ],
             ),
             const SizedBox(height: 120.0),
-            // TODO: Remove filled: true values (103)
-            // TODO: Add TextField widgets (101)
-            // TODO: Add button bar (101)
+
+            // Username Field
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                
+                labelText: 'Username',
+              ),
+            ),
+            
+            const SizedBox(height: 12.0),
+
+            // Password Field
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                
+                labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
+
+            const SizedBox(height: 24.0),
+
+            // Button Bar
+            OverflowBar(
+              alignment: MainAxisAlignment.end,
+              children: <Widget>[
+                // Cancel Button
+               TextButton(
+  child: const Text('CANCEL'),
+  onPressed: () {
+    _usernameController.clear();
+    _passwordController.clear();
+  },
+  style: TextButton.styleFrom(
+    foregroundColor: Color(0xFF3E2723),
+    shape: const BeveledRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(7.0)),
+    ),
+  ),
+),
+
+                // Next Button
+                ElevatedButton(
+                  child: const Text('NEXT'),
+                  onPressed: () {
+                     _usernameController.clear();
+                     _passwordController.clear();
+                    // TODO: Show the next page
+                            // TODO: Show the next page (101) 
+        Navigator.pop(context);
+                  },
+                   style: ElevatedButton.styleFrom( 
+                    foregroundColor: Color(0xFF3E2723),
+                    backgroundColor: Color(0xFFF8BBD0),
+                    elevation: 8.0, // Raised elevation
+                    shape: const BeveledRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(7.0)),
+                   ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers to avoid memory leaks
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
